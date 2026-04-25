@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join Joy Cherotich Art — a creative space for young Kenyan artists. Sign up or log in!">
+  <title>Join the Crew ✨ | Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px}
+    body{font-family:'Sora',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#7c4dff,#e040fb,#00bcd4);background-size:400% 400%;animation:gradBg 12s ease infinite;color:#1a1a2e;overflow:hidden;position:relative}
+    @keyframes gradBg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+
+    /* Floating art emojis */
+    .floating{position:fixed;font-size:2rem;opacity:.15;animation:floatUp linear infinite;pointer-events:none;z-index:0}
+    @keyframes floatUp{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
+
+    /* Card */
+    .auth-card{background:#fff;border-radius:28px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;z-index:1;animation:popIn .5s ease-out}
+    @keyframes popIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+    .logo{text-align:center;margin-bottom:.5rem;font-size:1.6rem;font-weight:700}
+    .logo .joy{color:#7c4dff}.logo .art{color:#e040fb}
+    .tagline{text-align:center;color:#888;font-size:.85rem;margin-bottom:2rem}
+
+    /* Tabs */
+    .auth-tabs{display:flex;border-radius:14px;background:#f5f0ff;padding:4px;margin-bottom:1.5rem}
+    .auth-tab{flex:1;padding:.7rem;border:none;background:transparent;border-radius:11px;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;color:#888}
+    .auth-tab.active{background:linear-gradient(135deg,#e040fb,#7c4dff);color:#fff;box-shadow:0 4px 15px rgba(124,77,255,.3)}
+
+    /* Forms */
+    .auth-form{display:none;flex-direction:column;gap:.85rem}
+    .auth-form.active{display:flex}
+    .form-group{position:relative}
+    .form-group label{display:block;font-size:.75rem;font-weight:600;color:#555;margin-bottom:.3rem;padding-left:.2rem}
+    .form-group input,.form-group select{width:100%;padding:.85rem 1rem .85rem 2.8rem;border:1.5px solid #e8daff;border-radius:14px;font-family:inherit;font-size:.9rem;background:#faf7ff;transition:border-color .3s,box-shadow .3s;color:#1a1a2e}
+    .form-group select{padding-left:2.8rem;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237c4dff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center}
+    .form-group input:focus,.form-group select:focus{outline:none;border-color:#7c4dff;box-shadow:0 0 0 3px rgba(124,77,255,.12)}
+    .form-icon{position:absolute;left:1rem;top:2.1rem;font-size:1rem;pointer-events:none}
+    .form-group input::placeholder{color:#bbb}
+
+    /* Age display */
+    .age-display{text-align:center;font-size:.8rem;color:#7c4dff;font-weight:600;margin-top:-.3rem;min-height:1.2rem}
+
+    /* Password toggle */
+    .pw-toggle{position:absolute;right:1rem;top:2.1rem;background:none;border:none;cursor:pointer;font-size:1rem}
+
+    /* Avatar picker */
+    .avatar-picker{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:.3rem 0}
+    .avatar-option{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;border:2px solid #e8daff;cursor:pointer;transition:all .3s;background:#faf7ff}
+    .avatar-option:hover{transform:scale(1.1);border-color:#7c4dff}
+    .avatar-option.selected{border-color:#7c4dff;background:linear-gradient(135deg,#f3e5ff,#e8daff);box-shadow:0 0 0 3px rgba(124,77,255,.15)}
+
+    /* Interests */
+    .interests-grid{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center}
+    .interest-chip{padding:.35rem .7rem;border-radius:50px;border:1.5px solid #e8daff;font-size:.72rem;font-weight:500;cursor:pointer;transition:all .3s;background:#faf7ff;color:#666}
+    .interest-chip:hover,.interest-chip.selected{background:linear-gradient(135deg,#e040fb,#7c4dff);color:#fff;border-color:transparent}
+
+    /* Submit */
+    .btn-auth{width:100%;padding:1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#e040fb,#7c4dff);color:#fff;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s;margin-top:.5rem}
+    .btn-auth:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(124,77,255,.4)}
+    .btn-auth:active{transform:translateY(0)}
+
+    /* Divider */
+    .divider{display:flex;align-items:center;gap:1rem;margin:.3rem 0;color:#bbb;font-size:.75rem}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:#e8daff}
+
+    /* Social login */
+    .social-btns{display:flex;gap:.6rem}
+    .social-btn{flex:1;padding:.7rem;border:1.5px solid #e8daff;border-radius:12px;background:#fff;cursor:pointer;font-size:1.1rem;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:.4rem;font-family:inherit;font-size:.8rem;color:#555}
+    .social-btn:hover{border-color:#7c4dff;background:#faf7ff}
+
+    /* Terms */
+    .terms{font-size:.7rem;color:#aaa;text-align:center;margin-top:.5rem;line-height:1.5}
+    .terms a{color:#7c4dff;text-decoration:underline}
+
+    /* Error */
+    .error-msg{background:#fff0f0;color:#e53935;padding:.6rem 1rem;border-radius:10px;font-size:.8rem;text-align:center;display:none;border:1px solid #ffcdd2}
+    .error-msg.show{display:block}
+
+    /* Success */
+    .success-screen{display:none;text-align:center;padding:2rem 0}
+    .success-screen.show{display:block}
+    .success-emoji{font-size:4rem;margin-bottom:1rem;animation:bounce 1s ease infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    .success-screen h2{margin-bottom:.5rem;font-size:1.5rem}
+    .success-screen p{color:#888;margin-bottom:1.5rem;font-size:.9rem}
+
+    /* Responsive */
+    @media(max-width:480px){
+      body{padding:1rem}
+      .auth-card{padding:1.8rem;border-radius:22px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating art emojis background -->
+  <div id="floatingEmojis"></div>
+
+  <div class="auth-card">
+    <div class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></div>
+    <p class="tagline">A creative space for young Kenyan artists ✨</p>
+
+    <!-- Error message -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Success screen (hidden initially) -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-emoji">🎨</div>
+      <h2>Welcome to the Crew!</h2>
+      <p id="successMsg">You're in! Redirecting to the gallery...</p>
+      <button class="btn-auth" onclick="window.location.href='index.html'">Enter the Gallery ✨</button>
+    </div>
+
+    <!-- Auth tabs -->
+    <div id="authContent">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log In</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+
+      <!-- ===== LOGIN FORM ===== -->
+      <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Username or Email</label>
+          <span class="form-icon">👤</span>
+          <input type="text" id="loginUser" placeholder="joy_creates" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <span class="form-icon">🔒</span>
+          <input type="password" id="loginPass" placeholder="••••••••" required autocomplete="current-password">
+          <button type="button" class="pw-toggle" onclick="togglePw('loginPass', this)">👁️</button>
+        </div>
+        <button type="submit" class="btn-auth">Log In 🚀</button>
+        <div class="divider">or continue with</div>
+        <div class="social-btns">
+          <button type="button" class="social-btn" onclick="socialLogin('Google')">🔵 Google</button>
+          <button type="button" class="social-btn" onclick="socialLogin('TikTok')">🎵 TikTok</button>
+        </div>
+        <p class="terms">Don't have an account? <a href="#" onclick="switchTab('signup')">Sign up — it's free!</a></p>
+      </form>
+
+      <!-- ===== SIGNUP FORM ===== -->
+      <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
+        <!-- Step 1: Basic info -->
+        <div id="step1">
+          <div class="form-group">
+            <label>What should we call you?</label>
+            <span class="form-icon">✨</span>
+            <input type="text" id="signupName" placeholder="Joy Cherotich" required>
+          </div>
+          <div class="form-group">
+            <label>Pick a cool username</label>
+            <span class="form-icon">🎨</span>
+            <input type="text" id="signupUsername" placeholder="joy_creates" required pattern="[a-z0-9_]{3,20}" title="3-20 characters, lowercase letters, numbers, underscores">
+          </div>
+          <div class="form-group">
+            <label>Your email</label>
+            <span class="form-icon">📧</span>
+            <input type="email" id="signupEmail" placeholder="joy@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>How old are you?</label>
+            <span class="form-icon">🎂</span>
+            <input type="number" id="signupAge" placeholder="15" min="10" max="25" required>
+          </div>
+          <div class="age-display" id="ageDisplay"></div>
+          <div class="form-group">
+            <label>Create a password</label>
+            <span class="form-icon">🔒</span>
+            <input type="password" id="signupPass" placeholder="At least 6 characters" required minlength="6">
+            <button type="button" class="pw-toggle" onclick="togglePw('signupPass', this)">👁️</button>
+          </div>
+          <button type="button" class="btn-auth" onclick="goToStep2()">Next — Pick Your Vibe →</button>
+        </div>
+
+        <!-- Step 2: Personality -->
+        <div id="step2" style="display:none">
+          <div class="form-group">
+            <label>Choose your avatar 😎</label>
+          </div>
+          <div class="avatar-picker" id="avatarPicker">
+            <div class="avatar-option selected" data-avatar="🎨">🎨</div>
+            <div class="avatar-option" data-avatar="🖌️">🖌️</div>
+            <div class="avatar-option" data-avatar="✏️">✏️</div>
+            <div class="avatar-option" data-avatar="🦁">🦁</div>
+            <div class="avatar-option" data-avatar="🌍">🌍</div>
+            <div class="avatar-option" data-avatar="🔥">🔥</div>
+            <div class="avatar-option" data-avatar="💜">💜</div>
+            <div class="avatar-option" data-avatar="🌈">🌈</div>
+            <div class="avatar-option" data-avatar="⭐">⭐</div>
+            <div class="avatar-option" data-avatar="🎵">🎵</div>
+          </div>
+
+          <div class="form-group" style="margin-top:.8rem">
+            <label>Where in Kenya are you? 📍</label>
+            <span class="form-icon">🇰🇪</span>
+            <select id="signupCity">
+              <option value="">Pick your city</option>
+              <option>Nairobi</option><option>Mombasa</option><option>Kisumu</option>
+              <option>Nakuru</option><option>Eldoret</option><option>Thika</option>
+              <option>Malindi</option><option>Nyeri</option><option>Machakos</option>
+              <option>Lamu</option><option>Nanyuki</option><option>Kitale</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>What kind of art do you make? (pick all that apply)</label>
+          </div>
+          <div class="interests-grid" id="interests">
+            <span class="interest-chip" data-interest="painting">🎨 Painting</span>
+            <span class="interest-chip" data-interest="drawing">✏️ Drawing</span>
+            <span class="interest-chip" data-interest="digital">💻 Digital Art</span>
+            <span class="interest-chip" data-interest="sculpture">🗿 Sculpture</span>
+            <span class="interest-chip" data-interest="beadwork">📿 Beadwork</span>
+            <span class="interest-chip" data-interest="photography">📸 Photography</span>
+            <span class="interest-chip" data-interest="mixed">🧩 Mixed Media</span>
+            <span class="interest-chip" data-interest="music">🎵 Music Art</span>
+            <span class="interest-chip" data-interest="fashion">👗 Fashion</span>
+            <span class="interest-chip" data-interest="graffiti">🎯 Street Art</span>
+            <span class="interest-chip" data-interest="animation">🎬 Animation</span>
+            <span class="interest-chip" data-interest="justlooking">👀 Just Looking!</span>
+          </div>
+
+          <button type="submit" class="btn-auth" style="margin-top:1rem">Join the Crew 🚀</button>
+          <p style="text-align:center;margin-top:.5rem"><a href="#" onclick="backToStep1()" style="color:#7c4dff;font-size:.82rem;font-weight:500">← Back</a></p>
+        </div>
+
+        <div class="divider" id="signupDivider">or continue with</div>
+        <div class="social-btns" id="signupSocials">
+          <button type="button" class="social-btn" onclick="socialLogin('Google')">🔵 Google</button>
+          <button type="button" class="social-btn" onclick="socialLogin('TikTok')">🎵 TikTok</button>
+        </div>
+        <p class="terms">By signing up you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a>.<br>You must be 10+ to join. Under 13? Ask a parent! 💜</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ===== Floating emojis =====
+    const emojis = ['🎨','🖌️','✏️','🎵','💜','⭐','🌈','🔥','🦁','🌍','🇰🇪','🏔️'];
+    const container = document.getElementById('floatingEmojis');
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('div');
+      el.className = 'floating';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (8 + Math.random() * 12) + 's';
+      el.style.animationDelay = (Math.random() * 10) + 's';
+      el.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
+      container.appendChild(el);
+    }
+
+    // ===== Tab switching =====
+    const tabs = document.querySelectorAll('.auth-tab');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    function switchTab(tab) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+      loginForm.classList.toggle('active', tab === 'login');
+      signupForm.classList.toggle('active', tab === 'signup');
+      hideError();
+      // Reset signup to step 1
+      if (tab === 'signup') backToStep1();
+    }
+    tabs.forEach(t => t.addEventListener('click', () => switchTab(t.dataset.tab)));
+
+    // ===== Password toggle =====
+    function togglePw(id, btn) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+      else { input.type = 'password'; btn.textContent = '👁️'; }
+    }
+
+    // ===== Age display =====
+    document.getElementById('signupAge').addEventListener('input', function() {
+      const age = parseInt(this.value);
+      const el = document.getElementById('ageDisplay');
+      if (!age || age < 10) el.textContent = '';
+      else if (age <= 13) el.textContent = '🌱 Young creator vibes!';
+      else if (age <= 16) el.textContent = '🔥 Peak creative energy!';
+      else if (age <= 19) el.textContent = '🚀 Almost grown but still dreaming!';
+      else el.textContent = '✨ Young at heart!';
+    });
+
+    // ===== Avatar picker =====
+    let selectedAvatar = '🎨';
+    document.querySelectorAll('.avatar-option').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelectorAll('.avatar-option').forEach(o => o.classList.remove('selected'));
+        a.classList.add('selected');
+        selectedAvatar = a.dataset.avatar;
+      });
+    });
+
+    // ===== Interest chips =====
+    document.querySelectorAll('.interest-chip').forEach(chip => {
+      chip.addEventListener('click', () => chip.classList.toggle('selected'));
+    });
+
+    // ===== Step navigation =====
+    function goToStep2() {
+      const name = document.getElementById('signupName').value.trim();
+      const username = document.getElementById('signupUsername').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const age = document.getElementById('signupAge').value;
+      const pass = document.getElementById('signupPass').value;
+
+      if (!name || !username || !email || !age || !pass) return showError('Please fill in all fields! ✏️');
+      if (pass.length < 6) return showError('Password must be at least 6 characters 🔒');
+      if (parseInt(age) < 10) return showError('You must be at least 10 to join 🌱');
+      if (parseInt(age) > 25) return showError('This platform is for young creatives (10-25) 💜');
+
+      // Check if username taken
+      const users = JSON.parse(localStorage.getItem('jcaUsers') || '{}');
+      if (users[username]) return showError('That username is taken! Try another 🎨');
+
+      hideError();
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+      document.getElementById('signupDivider').style.display = 'none';
+      document.getElementById('signupSocials').style.display = 'none';
+    }
+
+    function backToStep1() {
+      document.getElementById('step1').style.display = 'block';
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('signupDivider').style.display = '';
+      document.getElementById('signupSocials').style.display = '';
+    }
+
+    // ===== Error handling =====
+    function showError(msg) {
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg; el.classList.add('show');
+    }
+    function hideError() { document.getElementById('errorMsg').classList.remove('show'); }
+
+    // ===== Signup =====
+    function handleSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const username = document.getElementById('signupUsername').value.trim().toLowerCase();
+      const email = document.getElementById('signupEmail').value.trim();
+      const age = parseInt(document.getElementById('signupAge').value);
+      const pass = document.getElementById('signupPass').value;
+      const city = document.getElementById('signupCity').value || 'Kenya';
+      const interests = [...document.querySelectorAll('.interest-chip.selected')].map(c => c.dataset.interest);
+
+      const user = { name, username, email, age, pass, city, avatar: selectedAvatar, interests, joinedDate: new Date().toISOString() };
+
+      // Save to localStorage
+      const users = JSON.parse(localStorage.getItem('jcaUsers') || '{}');
+      users[username] = user;
+      localStorage.setItem('jcaUsers', JSON.stringify(users));
+
+      // Log them in
+      localStorage.setItem('jcaCurrentUser', JSON.stringify(user));
+
+      // Show success
+      showSuccess(name);
+    }
+
+    // ===== Login =====
+    function handleLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('loginUser').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPass').value;
+      const users = JSON.parse(localStorage.getItem('jcaUsers') || '{}');
+
+      // Find user by username or email
+      let user = users[input] || Object.values(users).find(u => u.email.toLowerCase() === input);
+
+      if (!user) return showError('Account not found. Sign up first! ✨');
+      if (user.pass !== pass) return showError('Wrong password. Try again! 🔒');
+
+      localStorage.setItem('jcaCurrentUser', JSON.stringify(user));
+      showSuccess(user.name);
+    }
+
+    // ===== Social login (mock) =====
+    function socialLogin(provider) {
+      const mockUser = {
+        name: 'Creative ' + provider + ' User',
+        username: provider.toLowerCase() + '_user_' + Math.floor(Math.random()*1000),
+        email: '', age: 15, city: 'Kenya',
+        avatar: '🌍', interests: [], pass: '',
+        joinedDate: new Date().toISOString()
+      };
+      localStorage.setItem('jcaCurrentUser', JSON.stringify(mockUser));
+      showSuccess(mockUser.name);
+    }
+
+    // ===== Success =====
+    function showSuccess(name) {
+      document.getElementById('authContent').style.display = 'none';
+      document.getElementById('errorMsg').style.display = 'none';
+      const screen = document.getElementById('successScreen');
+      screen.classList.add('show');
+      document.getElementById('successMsg').textContent = `Welcome, ${name}! 🎉 You're part of the crew now.`;
+      setTimeout(() => { window.location.href = 'index.html'; }, 3000);
+    }
+
+    // ===== Redirect if already logged in =====
+    if (localStorage.getItem('jcaCurrentUser')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

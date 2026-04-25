@@ -220,6 +220,20 @@
     footer p{font-size:.8rem;color:var(--text-light)}
 
     /* ===== Responsive ===== */
+    /* ===== User Profile Badge ===== */
+    .user-badge{display:flex;align-items:center;gap:.5rem;background:var(--bg-alt);padding:.35rem .8rem .35rem .4rem;border-radius:50px;border:1px solid var(--border);cursor:pointer;transition:all .3s;position:relative}
+    .user-badge:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(124,77,255,.12)}
+    .user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff}
+    .user-name{font-size:.78rem;font-weight:600;color:var(--text);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .user-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:.5rem;min-width:180px;box-shadow:0 8px 30px rgba(0,0,0,.12);z-index:100}
+    .user-dropdown.open{display:block}
+    .user-dropdown-item{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;border-radius:10px;font-size:.82rem;font-weight:500;cursor:pointer;transition:background .2s;color:var(--text)}
+    .user-dropdown-item:hover{background:var(--bg-alt)}
+    .user-dropdown-item.danger{color:#e53935}
+    .user-dropdown-header{padding:.6rem .8rem;border-bottom:1px solid var(--border);margin-bottom:.3rem}
+    .user-dropdown-header .name{font-weight:700;font-size:.85rem}
+    .user-dropdown-header .meta{font-size:.7rem;color:var(--text-light)}
+
     @media(max-width:768px){
       .nav-links{display:none;position:absolute;top:100%;left:0;width:100%;flex-direction:column;background:var(--nav-bg);backdrop-filter:blur(14px);padding:1.5rem;gap:1.2rem;box-shadow:0 8px 20px rgba(124,77,255,.1)}
       .nav-links.open{display:flex}.hamburger{display:flex}
@@ -258,6 +272,19 @@
           <li><a href="#comments">Wall 💬</a></li>
           <li><a href="#contact">Say Hi</a></li>
         </ul>
+        <div class="user-badge" id="userBadge" onclick="document.getElementById('userDropdown').classList.toggle('open')">
+          <div class="user-avatar" id="userAvatar">🎨</div>
+          <span class="user-name" id="userName">Guest</span>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="user-dropdown-header">
+              <div class="name" id="dropdownName">Guest</div>
+              <div class="meta" id="dropdownMeta">@guest · Kenya</div>
+            </div>
+            <div class="user-dropdown-item" onclick="window.location.href='login.html'">👤 My Profile</div>
+            <div class="user-dropdown-item" onclick="switchTab('signup')">⚙️ Settings</div>
+            <div class="user-dropdown-item danger" id="logoutBtn" onclick="handleLogout()">🚪 Log Out</div>
+          </div>
+        </div>
         <button class="hamburger" id="hamburger" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
       </nav>
     </div>
@@ -645,6 +672,25 @@
   </footer>
 
   <script>
+    // ===== Auth Check =====
+    const currentUser = JSON.parse(localStorage.getItem('jcaCurrentUser'));
+    if (!currentUser) { window.location.href = 'login.html'; }
+    else {
+      document.getElementById('userAvatar').textContent = currentUser.avatar || '🎨';
+      document.getElementById('userName').textContent = currentUser.name ? currentUser.name.split(' ')[0] : 'Guest';
+      document.getElementById('dropdownName').textContent = currentUser.name || 'Guest';
+      document.getElementById('dropdownMeta').textContent = '@' + (currentUser.username || 'guest') + ' · ' + (currentUser.city || 'Kenya');
+    }
+    function handleLogout() {
+      localStorage.removeItem('jcaCurrentUser');
+      window.location.href = 'login.html';
+    }
+    // Close dropdown on outside click
+    document.addEventListener('click', e => {
+      const badge = document.getElementById('userBadge');
+      if (!badge.contains(e.target)) document.getElementById('userDropdown').classList.remove('open');
+    });
+
     // ===== Theme Switcher =====
     const themeBtns=document.querySelectorAll('.theme-btn');
     function setTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('theme',t);themeBtns.forEach(b=>b.classList.toggle('active',b.dataset.theme===t))}
