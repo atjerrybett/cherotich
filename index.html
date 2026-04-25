@@ -230,6 +230,50 @@
     .btn-white { background: #fff; color: #7c4dff; font-weight: 700; }
     .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,.2); }
 
+    /* ===== Drawing Tool ===== */
+    #draw { padding: 6rem 0; background: linear-gradient(180deg, #fefcff 0%, #f5f0ff 100%); }
+    .draw-wrapper {
+      background: #fff; border-radius: 24px; padding: 2rem;
+      box-shadow: 0 8px 40px rgba(124,77,255,.1); max-width: 900px; margin: 0 auto;
+    }
+    .draw-toolbar {
+      display: flex; flex-wrap: wrap; gap: .75rem; align-items: center;
+      margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f0e8ff;
+    }
+    .draw-toolbar label { font-size: .8rem; font-weight: 600; color: #555; }
+    .color-swatches { display: flex; gap: .4rem; align-items: center; }
+    .swatch {
+      width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent;
+      cursor: pointer; transition: transform .2s, border-color .2s;
+    }
+    .swatch:hover, .swatch.active { transform: scale(1.2); border-color: #7c4dff; }
+    .color-picker-wrap { position: relative; }
+    .color-picker-wrap input[type=color] {
+      width: 28px; height: 28px; border: none; border-radius: 50%; cursor: pointer;
+      padding: 0; background: none;
+    }
+    .draw-toolbar input[type=range] {
+      width: 100px; accent-color: #7c4dff; cursor: pointer;
+    }
+    .size-display { font-size: .75rem; color: #7c4dff; font-weight: 600; min-width: 28px; }
+    .tool-btn {
+      padding: .4rem .9rem; border-radius: 50px; border: 1.5px solid #e0d4f5;
+      background: #fff; cursor: pointer; font-size: .78rem; font-weight: 500;
+      transition: all .3s; font-family: inherit;
+    }
+    .tool-btn:hover, .tool-btn.active {
+      background: linear-gradient(135deg, #e040fb, #7c4dff); color: #fff; border-color: transparent;
+    }
+    .tool-btn-danger { border-color: #ffcdd2; color: #e53935; }
+    .tool-btn-danger:hover { background: #e53935; color: #fff; border-color: transparent; }
+    .canvas-container {
+      position: relative; border-radius: 16px; overflow: hidden;
+      border: 2px solid #f0e8ff; cursor: crosshair;
+      touch-action: none;
+    }
+    .canvas-container canvas { display: block; width: 100%; }
+    .draw-actions { display: flex; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
+
     /* ===== Contact ===== */
     #contact { padding: 6rem 0; background: #fff; }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
@@ -296,6 +340,7 @@
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#about">About Joy</a></li>
           <li><a href="#creators">Young Creators</a></li>
+          <li><a href="#draw">Draw ✏️</a></li>
           <li><a href="#contact">Say Hi 👋</a></li>
         </ul>
         <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
@@ -514,6 +559,48 @@
     <a href="#contact" class="btn btn-white">Submit Your Art 🚀</a>
   </section>
 
+  <!-- ===== Drawing Tool ===== -->
+  <section id="draw">
+    <div class="container">
+      <h2 class="section-title">Make Your Own Art ✏️</h2>
+      <p class="section-subtitle">Grab a color, pick a brush size, and let your creativity flow right here on the page!</p>
+
+      <div class="draw-wrapper">
+        <div class="draw-toolbar">
+          <label>Color:</label>
+          <div class="color-swatches" id="swatches">
+            <div class="swatch active" data-color="#1a1a2e" style="background:#1a1a2e"></div>
+            <div class="swatch" data-color="#e53935" style="background:#e53935"></div>
+            <div class="swatch" data-color="#e040fb" style="background:#e040fb"></div>
+            <div class="swatch" data-color="#7c4dff" style="background:#7c4dff"></div>
+            <div class="swatch" data-color="#00bcd4" style="background:#00bcd4"></div>
+            <div class="swatch" data-color="#4caf50" style="background:#4caf50"></div>
+            <div class="swatch" data-color="#ff9800" style="background:#ff9800"></div>
+            <div class="swatch" data-color="#ffffff" style="background:#fff; border:1.5px solid #ddd"></div>
+            <div class="color-picker-wrap"><input type="color" id="colorPicker" value="#7c4dff" title="Pick any color"></div>
+          </div>
+
+          <label>Size:</label>
+          <input type="range" id="brushSize" min="1" max="50" value="4">
+          <span class="size-display" id="sizeDisplay">4px</span>
+
+          <button class="tool-btn active" id="penTool" data-tool="pen">🖊️ Pen</button>
+          <button class="tool-btn" id="eraserTool" data-tool="eraser">⬜ Eraser</button>
+          <button class="tool-btn tool-btn-danger" id="clearBtn">🗑️ Clear</button>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="drawCanvas" width="1700" height="900"></canvas>
+        </div>
+
+        <div class="draw-actions">
+          <button class="btn btn-primary" id="downloadBtn">Download My Art 💾</button>
+          <button class="tool-btn" id="undoBtn">↩️ Undo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Contact ===== -->
   <section id="contact">
     <div class="container">
@@ -630,6 +717,133 @@
       alert('Thanks for reaching out! 💜 I\'ll get back to you soon. Keep creating! 🎨✨');
       e.target.reset();
     }
+
+    // ===== Drawing Tool =====
+    (() => {
+      const canvas = document.getElementById('drawCanvas');
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+      let currentColor = '#1a1a2e';
+      let currentSize = 4;
+      let tool = 'pen';
+      let history = [];
+      const MAX_HISTORY = 30;
+
+      // Fill white background
+      function fillBg() { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+      fillBg();
+      saveState();
+
+      function saveState() {
+        if (history.length >= MAX_HISTORY) history.shift();
+        history.push(canvas.toDataURL());
+      }
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+      }
+
+      function startDraw(e) {
+        e.preventDefault();
+        drawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+      }
+
+      function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : currentColor;
+        ctx.lineWidth = tool === 'eraser' ? currentSize * 4 : currentSize;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+      }
+
+      function endDraw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        drawing = false;
+        ctx.closePath();
+        saveState();
+      }
+
+      // Mouse events
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', endDraw);
+      canvas.addEventListener('mouseleave', endDraw);
+
+      // Touch events
+      canvas.addEventListener('touchstart', startDraw, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', endDraw);
+
+      // Color swatches
+      const swatches = document.querySelectorAll('.swatch');
+      swatches.forEach(s => s.addEventListener('click', () => {
+        swatches.forEach(sw => sw.classList.remove('active'));
+        s.classList.add('active');
+        currentColor = s.dataset.color;
+        document.getElementById('colorPicker').value = currentColor;
+        setTool('pen');
+      }));
+
+      // Color picker
+      document.getElementById('colorPicker').addEventListener('input', (e) => {
+        currentColor = e.target.value;
+        swatches.forEach(sw => sw.classList.remove('active'));
+        setTool('pen');
+      });
+
+      // Brush size
+      const brushSlider = document.getElementById('brushSize');
+      const sizeDisp = document.getElementById('sizeDisplay');
+      brushSlider.addEventListener('input', () => {
+        currentSize = parseInt(brushSlider.value);
+        sizeDisp.textContent = currentSize + 'px';
+      });
+
+      // Tool switching
+      function setTool(t) {
+        tool = t;
+        document.getElementById('penTool').classList.toggle('active', t === 'pen');
+        document.getElementById('eraserTool').classList.toggle('active', t === 'eraser');
+        canvas.style.cursor = t === 'eraser' ? 'cell' : 'crosshair';
+      }
+      document.getElementById('penTool').addEventListener('click', () => setTool('pen'));
+      document.getElementById('eraserTool').addEventListener('click', () => setTool('eraser'));
+
+      // Clear
+      document.getElementById('clearBtn').addEventListener('click', () => {
+        if (confirm('Clear the whole canvas? 🧹')) { fillBg(); saveState(); }
+      });
+
+      // Undo
+      document.getElementById('undoBtn').addEventListener('click', () => {
+        if (history.length <= 1) return;
+        history.pop();
+        const img = new Image();
+        img.onload = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0); };
+        img.src = history[history.length - 1];
+      });
+
+      // Download
+      document.getElementById('downloadBtn').addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.download = 'my-art-joycherotich.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    })();
   </script>
 </body>
 </html>
