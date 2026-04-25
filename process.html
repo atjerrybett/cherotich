@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process 🔄 — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher"><button class="theme-btn active" data-theme="light">☀️</button><button class="theme-btn" data-theme="dark">🌙</button><button class="theme-btn" data-theme="sunset">🌅</button></div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button><div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser"><div class="user-avatar" id="sidebarAvatar">🎨</div><div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div><div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="page-section">
+        <div class="container">
+          <h2 class="section-title">Sketch → Finished Piece 🔄</h2>
+          <p class="section-subtitle">Drag the slider to see how my art evolves from rough sketch to final piece!</p>
+          <div class="ba-slider-container">
+            <div class="ba-slider" id="baSlider">
+              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=900&q=80" alt="Finished artwork">
+              <div class="ba-after" id="baAfter"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=900&q=80" alt="Sketch version"></div>
+              <div class="ba-handle" id="baHandle"></div>
+            </div>
+            <div class="ba-labels"><span>✏️ Sketch</span><span>🎨 Finished</span></div>
+          </div>
+        </div>
+      </section>
+      <footer><div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div></footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    (()=>{const s=document.getElementById('baSlider'),a=document.getElementById('baAfter'),h=document.getElementById('baHandle');let d=false;
+    function mv(x){const r=s.getBoundingClientRect();let p=((x-r.left)/r.width)*100;p=Math.max(2,Math.min(98,p));a.style.width=p+'%';h.style.left=p+'%'}
+    s.addEventListener('mousedown',e=>{d=true;mv(e.clientX)});window.addEventListener('mousemove',e=>{if(d)mv(e.clientX)});window.addEventListener('mouseup',()=>d=false);
+    s.addEventListener('touchstart',e=>{d=true;mv(e.touches[0].clientX)},{passive:true});window.addEventListener('touchmove',e=>{if(d)mv(e.touches[0].clientX)},{passive:true});window.addEventListener('touchend',()=>d=false)})();
+  </script>
+</body>
+</html>

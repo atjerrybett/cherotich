@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery 🖼️ — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher">
+    <button class="theme-btn active" data-theme="light" title="Light">☀️</button>
+    <button class="theme-btn" data-theme="dark" title="Dark">🌙</button>
+    <button class="theme-btn" data-theme="sunset" title="Sunset">🌅</button>
+  </div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser">
+        <div class="user-avatar" id="sidebarAvatar">🎨</div>
+        <div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div>
+        <div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div>
+      </div>
+    </aside>
+    <main class="main-content">
+      <section id="gallery" class="page-section">
+        <div class="container">
+          <h2 class="section-title">My Art &amp; Faves 🖼️</h2>
+          <p class="section-subtitle">Each of my pieces comes with a vibe song — art and music go together. Hit play! 🎵</p>
+          <div class="gallery-filters">
+            <button class="filter-btn active" data-filter="all">All ✨</button>
+            <button class="filter-btn" data-filter="joy">Joy's Art</button>
+            <button class="filter-btn" data-filter="painting">Paintings</button>
+            <button class="filter-btn" data-filter="digital">Digital Art</button>
+            <button class="filter-btn" data-filter="mixed">Mixed Media</button>
+          </div>
+          <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-card" data-category="joy">
+              <span class="card-tag">Joy's Art</span><span class="card-age">Age 15</span>
+              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80" alt="Colorful abstract painting" loading="lazy">
+              <div class="card-info"><h3>Colors of the Rift Valley</h3><span class="artist-name">Joy Cherotich</span><p>Acrylic on canvas — my view of home 🏔️</p></div>
+              <div class="card-spotify"><iframe src="https://open.spotify.com/embed/track/3FAJ6O0NOHQV8Mc5Ri6ENp?theme=0" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+            </div>
+            <div class="gallery-card" data-category="joy">
+              <span class="card-tag">Joy's Art</span><span class="card-age">Age 15</span>
+              <img src="https://images.unsplash.com/photo-1582561424760-0321d75e81fa?w=600&q=80" alt="Kenyan landscape painting" loading="lazy">
+              <div class="card-info"><h3>Sunset Over Nairobi</h3><span class="artist-name">Joy Cherotich</span><p>Oil pastels — golden hour magic ✨</p></div>
+              <div class="card-spotify"><iframe src="https://open.spotify.com/embed/track/7GhIk7Il098yCjg4BQjzvb?theme=0" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+            </div>
+            <div class="gallery-card" data-category="joy">
+              <span class="card-tag">Joy's Art</span><span class="card-age">Age 15</span>
+              <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&q=80" alt="Abstract portrait" loading="lazy">
+              <div class="card-info"><h3>Identity</h3><span class="artist-name">Joy Cherotich</span><p>Mixed media self-portrait 🪞</p></div>
+              <div class="card-spotify"><iframe src="https://open.spotify.com/embed/track/0VjIjW4GlUZAMYd2vXMi3b?theme=0" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+            </div>
+            <div class="gallery-card" data-category="painting">
+              <span class="card-tag">Painting</span><span class="card-age">Age 16</span>
+              <img src="https://images.unsplash.com/photo-1580136579312-94651dfd596d?w=600&q=80" alt="African art painting" loading="lazy">
+              <div class="card-info"><h3>Market Vibes</h3><span class="artist-name">Brian Ochieng, 16</span><p>Acrylic on canvas — Kisumu life 🎨</p></div>
+            </div>
+            <div class="gallery-card" data-category="painting">
+              <span class="card-tag">Painting</span><span class="card-age">Age 14</span>
+              <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=600&q=80" alt="Bold painting" loading="lazy">
+              <div class="card-info"><h3>Dream in Color</h3><span class="artist-name">Amara Wanjiru, 14</span><p>Watercolor — dreams on paper 💭</p></div>
+            </div>
+            <div class="gallery-card" data-category="digital">
+              <span class="card-tag">Digital</span><span class="card-age">Age 15</span>
+              <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80" alt="Digital art" loading="lazy">
+              <div class="card-info"><h3>Neon Nairobi</h3><span class="artist-name">Kevin Maina, 15</span><p>iPad illustration — city glow 🌃</p></div>
+            </div>
+            <div class="gallery-card" data-category="digital">
+              <span class="card-tag">Digital</span><span class="card-age">Age 13</span>
+              <img src="https://images.unsplash.com/photo-1544967082-d9d25d867d66?w=600&q=80" alt="Character art" loading="lazy">
+              <div class="card-info"><h3>Warrior Spirit</h3><span class="artist-name">Zuri Adhiambo, 13</span><p>Digital character design 🦁</p></div>
+            </div>
+            <div class="gallery-card" data-category="mixed">
+              <span class="card-tag">Mixed Media</span><span class="card-age">Age 16</span>
+              <img src="https://images.unsplash.com/photo-1509460913710-56c2ac0e07f4?w=600&q=80" alt="Beadwork" loading="lazy">
+              <div class="card-info"><h3>Threads of Culture</h3><span class="artist-name">Linet Chebet, 16</span><p>Beadwork + canvas collage 📿</p></div>
+            </div>
+            <div class="gallery-card" data-category="mixed">
+              <span class="card-tag">Mixed Media</span><span class="card-age">Age 15</span>
+              <img src="https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&q=80" alt="Recycled art" loading="lazy">
+              <div class="card-info"><h3>Upcycled Dreams</h3><span class="artist-name">Imani Otieno, 15</span><p>Recycled materials — art from "trash" ♻️</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div>
+      </footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    // Gallery filter
+    const filterBtns=document.querySelectorAll('.filter-btn'),galleryCards=document.querySelectorAll('.gallery-card');
+    filterBtns.forEach(btn=>{btn.addEventListener('click',()=>{filterBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;galleryCards.forEach(c=>{const m=f==='all'||c.dataset.category===f;c.style.display=m?'':'none';if(m)c.style.animation='fadeUp .5s ease-out'})})});
+  </script>
+</body>
+</html>

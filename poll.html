@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote 🗳️ — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher"><button class="theme-btn active" data-theme="light">☀️</button><button class="theme-btn" data-theme="dark">🌙</button><button class="theme-btn" data-theme="sunset">🌅</button></div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button><div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser"><div class="user-avatar" id="sidebarAvatar">🎨</div><div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div><div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="page-section" style="background:var(--bg-alt)">
+        <div class="container">
+          <h2 class="section-title">Vote for Your Fave 🗳️</h2>
+          <p class="section-subtitle">Which of Joy's artworks speaks to you the most? Click to vote!</p>
+          <div class="poll-grid" id="pollGrid">
+            <div class="poll-option" data-poll="rift">
+              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400&q=80" alt="Colors of the Rift Valley" loading="lazy">
+              <h4>Colors of the Rift Valley</h4>
+              <div class="poll-bar-wrap"><div class="poll-bar" id="bar-rift"></div></div>
+              <div class="poll-pct" id="pct-rift">0%</div>
+            </div>
+            <div class="poll-option" data-poll="nairobi">
+              <img src="https://images.unsplash.com/photo-1582561424760-0321d75e81fa?w=400&q=80" alt="Sunset Over Nairobi" loading="lazy">
+              <h4>Sunset Over Nairobi</h4>
+              <div class="poll-bar-wrap"><div class="poll-bar" id="bar-nairobi"></div></div>
+              <div class="poll-pct" id="pct-nairobi">0%</div>
+            </div>
+            <div class="poll-option" data-poll="identity">
+              <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=400&q=80" alt="Identity" loading="lazy">
+              <h4>Identity</h4>
+              <div class="poll-bar-wrap"><div class="poll-bar" id="bar-identity"></div></div>
+              <div class="poll-pct" id="pct-identity">0%</div>
+            </div>
+          </div>
+          <div class="poll-total" id="pollTotal">Total votes: 0</div>
+        </div>
+      </section>
+      <footer><div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div></footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    (()=>{let votes=JSON.parse(localStorage.getItem('pollVotes')||'{"rift":12,"nairobi":8,"identity":15}');let voted=localStorage.getItem('pollVoted');
+    function render(){const t=Object.values(votes).reduce((a,b)=>a+b,0);for(const k in votes){const p=t?Math.round(votes[k]/t*100):0;document.getElementById('bar-'+k).style.width=p+'%';document.getElementById('pct-'+k).textContent=p+'% ('+votes[k]+')'}document.getElementById('pollTotal').textContent='Total votes: '+t;if(voted)document.querySelectorAll('.poll-option').forEach(o=>o.classList.toggle('voted',o.dataset.poll===voted))}
+    render();document.querySelectorAll('.poll-option').forEach(o=>{o.addEventListener('click',()=>{if(voted)return alert('You already voted! 😄 Thanks!');const k=o.dataset.poll;votes[k]++;voted=k;localStorage.setItem('pollVotes',JSON.stringify(votes));localStorage.setItem('pollVoted',voted);render()})})})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal 📖 — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher"><button class="theme-btn active" data-theme="light">☀️</button><button class="theme-btn" data-theme="dark">🌙</button><button class="theme-btn" data-theme="sunset">🌅</button></div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button><div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser"><div class="user-avatar" id="sidebarAvatar">🎨</div><div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div><div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="page-section" style="background:var(--bg-alt)">
+        <div class="container">
+          <h2 class="section-title">Art Journal 📖</h2>
+          <p class="section-subtitle">Stories from my creative journey — the good, the messy, and the magical.</p>
+          <div class="journal-grid">
+            <article class="journal-card">
+              <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80" alt="Art supplies" loading="lazy">
+              <div class="journal-body">
+                <div class="journal-date">April 20, 2026</div>
+                <h3>How I Started Painting at 10 🖌️</h3>
+                <p>It all began with a box of crayons my mum bought from the Nairobi market. I drew everything — our house, the cows, the sunset over the hills. I didn't know it then, but that was the start of something big...</p>
+                <span class="read-more">Read more →</span>
+              </div>
+            </article>
+            <article class="journal-card">
+              <img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=600&q=80" alt="Art studio" loading="lazy">
+              <div class="journal-body">
+                <div class="journal-date">April 12, 2026</div>
+                <h3>My First Art Sale! 💰</h3>
+                <p>Someone actually paid for my art! A friend's mum saw my painting of Nairobi at sunset and offered to buy it. I was shaking. Here's how it felt and what I learned about valuing your own work...</p>
+                <span class="read-more">Read more →</span>
+              </div>
+            </article>
+            <article class="journal-card">
+              <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&q=80" alt="Creative process" loading="lazy">
+              <div class="journal-body">
+                <div class="journal-date">March 28, 2026</div>
+                <h3>Dear Art Block, Go Away 😤</h3>
+                <p>I sat in front of a blank canvas for 3 hours. Nothing. Nada. Here are 5 things I do when creativity ghosts me — including one weird trick that involves ugali...</p>
+                <span class="read-more">Read more →</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <footer><div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div></footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+</body>
+</html>

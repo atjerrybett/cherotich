@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palette 🎨 — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher"><button class="theme-btn active" data-theme="light">☀️</button><button class="theme-btn" data-theme="dark">🌙</button><button class="theme-btn" data-theme="sunset">🌅</button></div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button><div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser"><div class="user-avatar" id="sidebarAvatar">🎨</div><div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div><div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="page-section">
+        <div class="container">
+          <h2 class="section-title">Kenyan Color Palettes 🎨</h2>
+          <p class="section-subtitle">Get a random Kenyan-inspired color palette for your next artwork. Click a color to copy!</p>
+          <div class="palette-wrapper">
+            <div class="palette-display" id="paletteDisplay"></div>
+            <div class="palette-name" id="paletteName"></div>
+            <div class="palette-actions">
+              <button class="btn btn-primary" id="genPalette">New Palette 🎲</button>
+              <button class="tool-btn" id="copyAllColors">Copy All Colors 📋</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer><div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div></footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    (()=>{const palettes=[
+      {name:'Maasai Sunset',colors:['#c0392b','#e74c3c','#f39c12','#f1c40f','#8e44ad']},
+      {name:'Nairobi Night',colors:['#1a1a2e','#16213e','#0f3460','#e94560','#533483']},
+      {name:'Savannah Gold',colors:['#d4a373','#ccd5ae','#e9edc9','#fefae0','#faedcd']},
+      {name:'Indian Ocean',colors:['#0077b6','#00b4d8','#90e0ef','#caf0f8','#023e8a']},
+      {name:'Mount Kenya',colors:['#2d6a4f','#40916c','#52b788','#74c69d','#95d5b2']},
+      {name:'Turkana Desert',colors:['#bc6c25','#dda15e','#fefae0','#606c38','#283618']},
+      {name:'Lamu Coral',colors:['#ff6b6b','#ffa07a','#ffd166','#06d6a0','#118ab2']},
+      {name:'Rift Valley Bloom',colors:['#7c4dff','#e040fb','#ff4081','#ff6e40','#ffab40']},
+      {name:'Amboseli Dawn',colors:['#ffb5a7','#fcd5ce','#f8edeb','#f9dcc4','#fec89a']},
+      {name:'Mombasa Spice',colors:['#9b2226','#ae2012','#bb3e03','#ca6702','#ee9b00']}
+    ];
+    const disp=document.getElementById('paletteDisplay'),nameEl=document.getElementById('paletteName');
+    function gen(){const p=palettes[Math.floor(Math.random()*palettes.length)];nameEl.textContent='"'+p.name+'"';disp.innerHTML=p.colors.map(c=>'<div class="palette-color" style="background:'+c+'" data-color="'+c+'" title="Click to copy">'+c+'</div>').join('');disp.querySelectorAll('.palette-color').forEach(el=>{el.addEventListener('click',()=>{navigator.clipboard.writeText(el.dataset.color);el.textContent='Copied!';setTimeout(()=>el.textContent=el.dataset.color,1200)})})}
+    gen();document.getElementById('genPalette').addEventListener('click',gen);
+    document.getElementById('copyAllColors').addEventListener('click',()=>{const c=[...disp.querySelectorAll('.palette-color')].map(e=>e.dataset.color).join(', ');navigator.clipboard.writeText(c);alert('All colors copied! 📋\n'+c)})})();
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw ✏️ — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher"><button class="theme-btn active" data-theme="light">☀️</button><button class="theme-btn" data-theme="dark">🌙</button><button class="theme-btn" data-theme="sunset">🌅</button></div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button><div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser"><div class="user-avatar" id="sidebarAvatar">🎨</div><div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div><div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="page-section" style="background:var(--bg-alt)">
+        <div class="container">
+          <h2 class="section-title">Make Your Own Art ✏️</h2>
+          <p class="section-subtitle">Grab a color, pick a brush size, and let your creativity flow right here!</p>
+          <div class="draw-wrapper">
+            <div class="draw-toolbar">
+              <label>Color:</label>
+              <div class="color-swatches" id="swatches">
+                <div class="swatch active" data-color="#1a1a2e" style="background:#1a1a2e"></div>
+                <div class="swatch" data-color="#e53935" style="background:#e53935"></div>
+                <div class="swatch" data-color="#e040fb" style="background:#e040fb"></div>
+                <div class="swatch" data-color="#7c4dff" style="background:#7c4dff"></div>
+                <div class="swatch" data-color="#00bcd4" style="background:#00bcd4"></div>
+                <div class="swatch" data-color="#4caf50" style="background:#4caf50"></div>
+                <div class="swatch" data-color="#ff9800" style="background:#ff9800"></div>
+                <div class="swatch" data-color="#ffffff" style="background:#fff;border:1.5px solid #ddd"></div>
+                <div class="color-picker-wrap"><input type="color" id="colorPicker" value="#7c4dff" title="Pick any color"></div>
+              </div>
+              <label>Size:</label>
+              <input type="range" id="brushSize" min="1" max="50" value="4">
+              <span class="size-display" id="sizeDisplay">4px</span>
+              <button class="tool-btn active" id="penTool">🖊️ Pen</button>
+              <button class="tool-btn" id="eraserTool">⬜ Eraser</button>
+              <button class="tool-btn tool-btn-danger" id="clearBtn">🗑️ Clear</button>
+            </div>
+            <div class="canvas-container"><canvas id="drawCanvas" width="1700" height="900"></canvas></div>
+            <div class="draw-actions">
+              <button class="btn btn-primary" id="downloadBtn">Download My Art 💾</button>
+              <button class="tool-btn" id="undoBtn">↩️ Undo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer><div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div></footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    (()=>{const canvas=document.getElementById('drawCanvas'),ctx=canvas.getContext('2d');let drawing=false,currentColor='#1a1a2e',currentSize=4,tool='pen',history=[];const MH=30;
+    function fillBg(){ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height)}fillBg();saveState();
+    function saveState(){if(history.length>=MH)history.shift();history.push(canvas.toDataURL())}
+    function getPos(e){const r=canvas.getBoundingClientRect(),sx=canvas.width/r.width,sy=canvas.height/r.height,cx=e.touches?e.touches[0].clientX:e.clientX,cy=e.touches?e.touches[0].clientY:e.clientY;return{x:(cx-r.left)*sx,y:(cy-r.top)*sy}}
+    function startDraw(e){e.preventDefault();drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y)}
+    function draw(e){if(!drawing)return;e.preventDefault();const p=getPos(e);ctx.lineTo(p.x,p.y);ctx.strokeStyle=tool==='eraser'?'#ffffff':currentColor;ctx.lineWidth=tool==='eraser'?currentSize*4:currentSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke()}
+    function endDraw(e){if(!drawing)return;e.preventDefault();drawing=false;ctx.closePath();saveState()}
+    canvas.addEventListener('mousedown',startDraw);canvas.addEventListener('mousemove',draw);canvas.addEventListener('mouseup',endDraw);canvas.addEventListener('mouseleave',endDraw);
+    canvas.addEventListener('touchstart',startDraw,{passive:false});canvas.addEventListener('touchmove',draw,{passive:false});canvas.addEventListener('touchend',endDraw);
+    document.querySelectorAll('.swatch').forEach(s=>s.addEventListener('click',()=>{document.querySelectorAll('.swatch').forEach(w=>w.classList.remove('active'));s.classList.add('active');currentColor=s.dataset.color;document.getElementById('colorPicker').value=currentColor;setTool('pen')}));
+    document.getElementById('colorPicker').addEventListener('input',e=>{currentColor=e.target.value;document.querySelectorAll('.swatch').forEach(w=>w.classList.remove('active'));setTool('pen')});
+    const bs=document.getElementById('brushSize'),sd=document.getElementById('sizeDisplay');bs.addEventListener('input',()=>{currentSize=parseInt(bs.value);sd.textContent=currentSize+'px'});
+    function setTool(t){tool=t;document.getElementById('penTool').classList.toggle('active',t==='pen');document.getElementById('eraserTool').classList.toggle('active',t==='eraser');canvas.style.cursor=t==='eraser'?'cell':'crosshair'}
+    document.getElementById('penTool').addEventListener('click',()=>setTool('pen'));document.getElementById('eraserTool').addEventListener('click',()=>setTool('eraser'));
+    document.getElementById('clearBtn').addEventListener('click',()=>{if(confirm('Clear canvas? 🧹')){fillBg();saveState()}});
+    document.getElementById('undoBtn').addEventListener('click',()=>{if(history.length<=1)return;history.pop();const img=new Image();img.onload=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0)};img.src=history[history.length-1]});
+    document.getElementById('downloadBtn').addEventListener('click',()=>{const l=document.createElement('a');l.download='my-art-joycherotich.png';l.href=canvas.toDataURL('image/png');l.click()})})();
+  </script>
+</body>
+</html>

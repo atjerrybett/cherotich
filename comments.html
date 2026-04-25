@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Wall 💬 — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher"><button class="theme-btn active" data-theme="light">☀️</button><button class="theme-btn" data-theme="dark">🌙</button><button class="theme-btn" data-theme="sunset">🌅</button></div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button><div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser"><div class="user-avatar" id="sidebarAvatar">🎨</div><div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div><div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="page-section">
+        <div class="container">
+          <h2 class="section-title">The Wall 💬</h2>
+          <p class="section-subtitle">What do you think of the art? Leave a message — the best ones stay on The Wall forever!</p>
+          <div class="comments-wrapper">
+            <div class="featured-comments" id="commentsList">
+              <div class="comment-bubble">
+                <div class="comment-header"><div class="comment-avatar">A</div><span class="comment-name">Aisha, Mombasa</span><span class="comment-age-badge">Age 14</span></div>
+                <div class="comment-text">Joy your art is AMAZING! 😍 The Rift Valley piece made me feel homesick in the best way. Keep going girl, you're inspiring all of us! 💜</div>
+                <div class="comment-date">April 22, 2026</div>
+              </div>
+              <div class="comment-bubble">
+                <div class="comment-header"><div class="comment-avatar">D</div><span class="comment-name">David, Nakuru</span><span class="comment-age-badge">Age 16</span></div>
+                <div class="comment-text">Found this site through TikTok and wow. The drawing tool is so cool, I spent like an hour on it 😂 Also the Identity piece is fire 🔥</div>
+                <div class="comment-date">April 20, 2026</div>
+              </div>
+              <div class="comment-bubble">
+                <div class="comment-header"><div class="comment-avatar">M</div><span class="comment-name">Ms. Odhiambo (Art Teacher)</span><span class="comment-age-badge">Teacher</span></div>
+                <div class="comment-text">Joy, I showed your website to my Form 2 class and they were SO inspired. This is exactly what young Kenyan creatives need. Proud of you! 🇰🇪✨</div>
+                <div class="comment-date">April 18, 2026</div>
+              </div>
+            </div>
+            <div class="guestbook-form">
+              <h3>Leave a Message ✍️</h3>
+              <form id="guestbookForm" onsubmit="handleGuestbook(event)">
+                <div class="form-row">
+                  <input type="text" placeholder="Your Name ✨" required aria-label="Name">
+                  <input type="text" placeholder="Your Age & City 📍" aria-label="Age and city">
+                </div>
+                <textarea rows="3" placeholder="What do you think of the art? Drop some love! 💬" required aria-label="Your comment"></textarea>
+                <button type="submit" class="btn btn-primary btn-sm">Post to The Wall 💬</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer><div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div></footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    function handleGuestbook(e){e.preventDefault();const f=e.target,name=f.elements[0].value,ac=f.elements[1].value||'Kenya 🇰🇪',msg=f.elements[2].value;
+    const date=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+    const b=document.createElement('div');b.className='comment-bubble';b.style.animation='fadeUp .5s ease-out';
+    b.innerHTML='<div class="comment-header"><div class="comment-avatar">'+name.charAt(0).toUpperCase()+'</div><span class="comment-name">'+name+', '+ac+'</span><span class="comment-age-badge">New ✨</span></div><div class="comment-text">'+msg+'</div><div class="comment-date">'+date+'</div>';
+    document.getElementById('commentsList').prepend(b);f.reset();alert('Your message is on The Wall! 💜✨')}
+  </script>
+</body>
+</html>

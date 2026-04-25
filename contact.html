@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Say Hi 💌 — Joy Cherotich Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+  <div class="theme-switcher"><button class="theme-btn active" data-theme="light">☀️</button><button class="theme-btn" data-theme="dark">🌙</button><button class="theme-btn" data-theme="sunset">🌅</button></div>
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button><div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header"><a href="index.html" class="logo"><span class="joy">Joy</span>Cherotich<span class="art">.art</span></a></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></a>
+        <a href="gallery.html"><span class="nav-icon">🖼️</span><span class="nav-label">Gallery</span></a>
+        <a href="process.html"><span class="nav-icon">🔄</span><span class="nav-label">Process</span></a>
+        <a href="about.html"><span class="nav-icon">👋</span><span class="nav-label">About Me</span></a>
+        <a href="creators.html"><span class="nav-icon">🌟</span><span class="nav-label">Creators</span></a>
+        <a href="challenge.html"><span class="nav-icon">🏆</span><span class="nav-label">Challenge</span></a>
+        <a href="poll.html"><span class="nav-icon">🗳️</span><span class="nav-label">Vote</span></a>
+        <a href="palette.html"><span class="nav-icon">🎨</span><span class="nav-label">Palette</span></a>
+        <a href="journal.html"><span class="nav-icon">📖</span><span class="nav-label">Journal</span></a>
+        <a href="draw.html"><span class="nav-icon">✏️</span><span class="nav-label">Draw</span></a>
+        <a href="comments.html"><span class="nav-icon">💬</span><span class="nav-label">The Wall</span></a>
+        <a href="contact.html"><span class="nav-icon">💌</span><span class="nav-label">Say Hi</span></a>
+      </nav>
+      <div class="sidebar-user" id="sidebarUser"><div class="user-avatar" id="sidebarAvatar">🎨</div><div class="user-info"><div class="name" id="sidebarName">Guest</div><div class="meta" id="sidebarMeta">@guest · Kenya</div></div><div class="sidebar-user-menu" id="sidebarUserMenu"><button class="danger" onclick="handleLogout()">🚪 Log Out</button></div></div>
+    </aside>
+    <main class="main-content">
+      <section class="page-section" style="background:var(--bg-card)">
+        <div class="container">
+          <h2 class="section-title">Say Hi! 💌</h2>
+          <p class="section-subtitle">Want to collab, get featured, or just chat about art? Drop me a message.</p>
+          <div class="contact-grid">
+            <div class="contact-info">
+              <h3>Let's Connect</h3>
+              <p>Whether you want your art featured, want to collab on a project, or just want to say hi — I'm here for it! 💜</p>
+              <div class="contact-detail"><div class="icon">📍</div><span>Kenya 🇰🇪</span></div>
+              <div class="contact-detail"><div class="icon">📧</div><span>joy@cherotich.art</span></div>
+              <div class="contact-detail"><div class="icon">📱</div><span>@joycherotich.art (Instagram)</span></div>
+              <div class="contact-detail"><div class="icon">🎵</div><span>@joycherotich (TikTok)</span></div>
+            </div>
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+              <input type="text" placeholder="Your Name ✨" required aria-label="Your name">
+              <input type="email" placeholder="Your Email 📧" required aria-label="Your email">
+              <input type="number" placeholder="Your Age 🎂" min="8" max="25" aria-label="Your age">
+              <textarea rows="5" placeholder="Tell me about yourself or your art! 🎨" required aria-label="Your message"></textarea>
+              <button type="submit" class="btn btn-primary">Send It! 🚀</button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <footer><div class="container"><p>&copy; 2026 Joy Cherotich. Made with 💜 in Kenya ✨</p></div></footer>
+    </main>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    function handleSubmit(e){e.preventDefault();alert('Thanks for reaching out! 💜 I\'ll get back to you soon. Keep creating! 🎨✨');e.target.reset()}
+  </script>
+</body>
+</html>
